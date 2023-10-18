@@ -1,9 +1,11 @@
 from django.shortcuts import render
 
+
 # Create your views here.
 import datetime
 import calendar
 import requests
+import os
 from datetime import datetime
 from django.shortcuts import render
 
@@ -11,7 +13,7 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    API_KEY = open("C:\\Users\\44791\DjangoProjects\\weather_project\\weather_app\\API_KEY", "r").read()
+    API_KEY = open(os.getcwd() + "\\weather_app\\API_KEY", "r").read()
     current_weather_url = "https://api.weatherbit.io/v2.0/current?city={}&country={}&key={}"
     forecast_url = "https://api.weatherbit.io/v2.0/forecast/daily?lat={}&lon={}&days=5&key={}"
 
