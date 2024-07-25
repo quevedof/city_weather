@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-
 # Create your views here.
 import datetime
 import calendar
@@ -12,11 +11,13 @@ from django.shortcuts import render
 # https://www.weatherbit.io/api/swaggerui/weather-api-v2#/Current32Weather32Data
 # Create your views here.
 
+#homepage
 def index(request):
     API_KEY = open(os.getcwd() + "\\weather_app\\API_KEY", "r").read()
     current_weather_url = "https://api.weatherbit.io/v2.0/current?city={}&country={}&key={}"
     forecast_url = "https://api.weatherbit.io/v2.0/forecast/daily?lat={}&lon={}&days=5&key={}"
 
+    # if the request is POST, query the API
     if request.method == "POST":
         city = request.POST['city']
         country_code = request.POST['country_code']
@@ -26,14 +27,14 @@ def index(request):
             "weather_data": weather_data,
             "daily_forecasts": daily_forecasts,
         }
-
+        #return data to the template
         return render(request, "weather_app/index.html", context)
 
     else:
         return render(request, "weather_app/index.html")
     
 
-# send requests to the URL, and capturing the responses
+# send requests to the URL, and capture the responses
 def fetch_weather_and_forecast(city, country_code, api_key, current_weather_url, forecast_url):
     response = requests.get(current_weather_url.format(city, country_code, api_key)).json()
     lat, lon = response['data'][0]['lat'], response['data'][0]['lon']
